@@ -34,12 +34,12 @@ const App: React.FC = () => {
       localStorage.setItem("inProgressItems", JSON.stringify([]));
     } else {
       setInProgressItems(
-        JSON.parse(
-          localStorage.getItem("inProgressItems") || "[]"
-        ).map((item: { title: string; time: string }) => ({
-          ...item,
-          time: new Date(item.time),
-        }))
+        JSON.parse(localStorage.getItem("inProgressItems") || "[]").map(
+          (item: { title: string; time: string }) => ({
+            ...item,
+            time: new Date(item.time),
+          })
+        )
       );
     }
     if (!localStorage.getItem("doneItems")) {
@@ -96,8 +96,11 @@ const App: React.FC = () => {
         title: inProgressItems[index].title,
         cost:
           Math.round(
-            (inProgressItems[index].time.getSeconds() / 60 / 60) *
-              SALARY_PER_HOUR *
+            ((inProgressItems[index].time.getSeconds() / 60 / 60) *
+              SALARY_PER_HOUR +
+              inProgressItems[index].time.getHours() * SALARY_PER_HOUR +
+              (inProgressItems[index].time.getMinutes() / 60) *
+                SALARY_PER_HOUR) *
               100
           ) / 100,
       },
