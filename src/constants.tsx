@@ -1,0 +1,1 @@
+export const SALARY_PER_HOUR:number = 100;
