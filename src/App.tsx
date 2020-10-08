@@ -116,11 +116,14 @@ const App: React.FC = () => {
         {
           title: inProgressItems[index].title,
           cost:
-            Math.round(
-              (inProgressItems[index].time.getSeconds() / 60 / 60) *
-                SALARY_PER_HOUR *
-                100
-            ) / 100,
+          Math.round(
+            ((inProgressItems[index].time.getSeconds() / 60 / 60) *
+              SALARY_PER_HOUR +
+              inProgressItems[index].time.getHours() * SALARY_PER_HOUR +
+              (inProgressItems[index].time.getMinutes() / 60) *
+                SALARY_PER_HOUR) *
+              100
+          ) / 100,
         },
       ])
     );
